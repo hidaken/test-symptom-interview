@@ -1,0 +1,23 @@
+
+<%= form_for(@categorise_disease, html:{class:"form-horizontal"}) do |f| %>
+<%= render 'shared/error_messages', object: f.object %>
+    <div class="col-md-12">
+        <div class="form-group">
+            <label class="col-sm-3 control-label">病名：</label>
+            <div class="col-sm-7">
+                <%= f.collection_select:disease_id, Disease.all, :id, :name,{prompt: ""}, {class:"form-control"}%>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="col-sm-3 control-label">カテゴライズ名：</label>
+            <div class="col-sm-7">
+                <%= f.collection_select :categorise_id, Categorise.all, :id, :categorise_name,{prompt: ""} , {class:"form-control"}%>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <%= f.submit class:"btn btn-sm btn-primary center-block"%>
+        </div>
+    </div>
+<% end %>

@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<!DOCTYPE html>
+<html>
+<head>
+  <% if content_for?(:head) %>
+    <%= yield :head %>
+  <% else %>
+    <title>問診推論システム</title>
+  <% end %>
+  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
+  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <%= csrf_meta_tags %>
+  <%= favicon_link_tag 'favicon.ico' %>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+</head>
+
+<body>
+
+<!-- Header -->
+  <%= render partial: "layouts/header" %>
+  
+<!-- flashメッセージ -->
+<div class="container">
+  <div class="error-message">
+  <%= render partial: "shared/error_messages"%>
+  </div>
+    
+<!-- 中身 -->    
+  <%= yield %>
+</div>
+<!-- Footer -->
+  <%= render partial: "layouts/footer" %>
+
+</body>
+</html>

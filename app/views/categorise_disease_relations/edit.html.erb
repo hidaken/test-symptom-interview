@@ -1,0 +1,9 @@
+<% if @categorise_disease != nil %>  
+    <% content_for :head do %>
+      <title><%= @categorise_disease.disease.name %></title>
+      <description><%= @categorise_disease.disease.name %>の詳細</description>
+    <% end %>
+<% end %>
+
+
+<%= render "categorise_disease_relations/categorise_disease_form" %>

@@ -1,0 +1,166 @@
+<% content_for :head do %>
+  <title>病気症状検索</title>
+<% end %>
+
+
+<div class ="panel panel-default">
+<div class="panel-heading">
+    <h4>病気症状検索</h4>
+</div>
+<div>
+  <%= search_form_for(@q, url: disease_symptoms_path(@q), html:{class:"form-inline"}) do |f| %>
+    <%#病名で検索%>
+    <div class ="form-group">
+      <%= f.label :name_cont, "病名" ,class:"control-label"%>
+      <%= f.search_field :name_cont ,class:"form-control"%>
+    </div>
+<!--検索：発症様式 -->
+    <div class ="form-group">      
+      <%= f.label :onset_cont, "発症様式",class:"control-label" %>
+      <%= f.collection_select :onset_cont,
+                              Onset.all,
+                              :onset_name,
+                              :onset_name,
+                              {:include_blank => true} ,{:class => "form-control"}%>
+    </div>
+<!--検索：病気分類 -->
+    <div class ="form-group">      
+      <%= f.label :disease_classifies_id_eq, "病気分類",class:"control-label" %>
+      <%= f.collection_select :disease_classifies_id_eq,
+                              DiseaseClassify.all, 
+                              :id, 
+                              :classify_name,
+                              {:include_blank => true} ,{:class => "form-control"}%>
+    </div>
+    </br>
+<!-- 年齢 -->
+    <div class ="form-group">
+      <%= label_tag :age,"年齢",class:"control-label" %>
+      <%= number_field_tag 'age',@age, in: 0...100,class: "form-control" %>
+    </div>
+<!-- 性別 -->
+    <div class ="form-group">
+      <%= label_tag :sex,"性別",class:"control-label" %>
+      <%= select_tag :sex, options_for_select({"男性" => 0, "女性" => 1},@sex),{:include_blank => true, class:"form-control"} %>
+    </div>
+<!-- 性別 -->
+    <div class ="form-group">
+      <%= label_tag :month,"月",class:"control-label" %>
+      <%= number_field_tag :month, @month,in:1..12, class:"form-control" %>
+    </div>
+<!--カテゴライズ大分類で検索-->
+    <div class ="form-group">      
+        <%= f.label :large_categorises_large_categorise_id_eq, "カテゴライズ分類",class:"control-label" %>
+        <% large_category_options = LargeCategorise
+                                    .group(:large_categorise_name)
+                                    .order(:large_categorise_id)
+                                    .map{|c| [c.large_categorise_name, c.large_categorise_id, data: { children_path: large_categorise_categorises_path(c.large_categorise_id) }]}%>
+        <%= f.select :large_categorises_large_categorise_id_eq,
+                                large_category_options,
+                                {:include_blank => true} ,class:"form-control select-parent" %>
+    </div>
+<!--ドロップダウンリストでカテゴライズで検索-->
+<!--カテゴライズ大分類が選ばれたら選択肢が絞られる-->
+    <div class ="form-group">      
+        <%= f.label :categorises_id_eq, "カテゴライズ",class:"control-label" %>
+        <% categorises = Categorise.all ||[]%>
+        <% categorise_options = categorises.map {|c| [c.categorise_name, c.id]} %>
+        <%= f.select :categorises_id_eq, categorise_options,{:include_blank => true} ,class:"form-control select-children" %>
+<!--カテゴライズに紐づく症状を表示：-->
+        症状：
+        <% if @symptom_from_categorise != nil %>
+          <% @symptom_from_categorise.each do |s| %>
+            <%= s.symptom.symptom_name %>
+          <% end %>
+        <% end %>
+    </div>
+    </br>
+    
+
+<!-- 症状のプルダウン。ransackとは関連させず絞込は行わない。とりあえず5回繰り返している -->
+    <% n = 5 %>
+    <% a = 0 %>
+    <% n.times do %>
+    <div class="form-group form-inline">
+      <%= label :symptom, :id1,"症状#{a+1}",class:"control-label" %>
+      <%= collection_select :symptom,a, @symptoms_for_select, :first, :last, {:include_blank => true, :selected => @symptomids[a]}, {:class => "form-control"} %>
+      <%#= collection_select :symptom,a, Symptom.includes(:symptom_category), :id, :symptom_category_name_and_symptom_name, {:include_blank => true, :selected => @symptomids[a]}, {:class => "form-control"} %>
+    </div>
+    <% a += 1 %>
+    <% end %>
+
+   
+    <div class ="form-group">           
+      <%= f.submit class:"btn btn-sm btn-primary"%>
+      <%= button_tag "Clear", :type => 'button',:class => "btn btn-sm clearForm"  %>
+      <!--<input type="reset" name="reset" value="Clear" class="btn btn-sm btn-default" />-->
+    </div>
+  <% end %>
+</div>
+
+<div class="panel-body">
+  
+  <table class="table table-hover table-condensed">
+  
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>病名</th>
+        <th>幼児</th>
+        <th>児童</th>
+        <th>成人</th>
+        <th>老人</th>
+        <th>男性</th>
+        <th>女性</th>
+        <!--<th>分類</th>-->
+        <th>基礎点数</th>
+        <th>年齢</th>
+        <th>性別</th>
+        <th>季節</th>
+        <% @symptomnames.each_index do |i| %>
+          <th class="symptom_name"><%= @symptomnames[i] %></th>
+          <!--症状名が長いものを固定の表示幅としたいが、symptom_nameでのCSSが当たっていないよう。。とりあえず放置-->
+        <% end %>
+        <th>合計点数</th>
+        <th>事前確率</th>
+        <th>事後確率</th>
+        <th>詳細</th>
+      </tr>
+    </thead>
+    <% if @diseases != nil %>
+      <tbody>
+      <% @diseases.each do |ds|  %>
+          <tr>
+            <td><%= ds.disease_id %></td>
+            <td><%= ds.disease_name %></td>
+            <td><%= number_to_percentage(ds.morbidity_baby*100,:precision => 0) %></td>
+            <td><%= number_to_percentage(ds.morbidity_child*100,:precision => 0) %></td>
+            <td><%= number_to_percentage(ds.morbidity_adult*100,:precision => 0) %></td>
+            <td><%= number_to_percentage(ds.morbidity_senior*100,:precision => 0) %></td>
+            <td><%= number_to_percentage(ds.morbidity_male*100,:precision => 0) %></td>
+            <td><%= number_to_percentage(ds.morbidity_female*100,:precision => 0) %></td>
+            <!--<td><%#= ds.classify_name.join(",") %></td>-->
+            <td><%= ds.point %></td>
+            <td><%= ds.age_point.round(2) %></td>
+            <td><%= ds.sex_point.round(2) %></td>
+            <td><%= ds.season_point.round(2)%></td>
+            
+            <% ds.plrarray.each_with_index do |plr, i| %>
+              <td><%= ds.plrarray[i] if ds.plrarray[i]!= nil %></td>
+            <% end %>
+            
+            <td><%= ds.total %></td>
+            <td><%= number_to_percentage(ds.pri_prob*100,:precision => 2) %></td>
+            <td><%= number_to_percentage(ds.post_prob*100,:precision => 2) %></td>
+            <td><%= link_to "", disease_path(ds.disease_id) ,class:"btn btn-sm btn-primary glyphicon glyphicon-pencil",:target=>["_blank"] %></td>
+          </tr>
+      <% end %>
+      
+      </tbody>
+    <% end %>
+  </table>
+  
+    
+</div>
+</div>
+</div>

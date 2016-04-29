@@ -1,0 +1,60 @@
+<div class ="panel panel-default">
+    <div class="panel-heading">
+      <h4>検索</h4>
+    </div>
+    
+    
+    <%= search_form_for(@q, url: search_path) do |f| %>
+        <%#病名で検索%>
+        <div class ="form-group">
+            <%= f.label :name_cont, "病名" ,class:"control-label"%>
+            <%= f.search_field :name_cont ,class:"form-control"%>
+        </div>
+        <%#発症様式で検索%>
+        <div class ="form-group">      
+            <%= f.label :onset_cont, "発症様式",class:"control-label" %>
+            <%= f.search_field :onset_cont ,class:"form-control"%>
+        </div>
+        <%#病気分類で検索%>
+        <div class ="form-group">      
+            <%= f.label :disease_classifies_id_eq, "病気分類",class:"control-label" %>
+            <%= f.collection_select :disease_classifies_id_eq,
+                                    DiseaseClassify.all, 
+                                    :id, 
+                                    :classify_name,
+                                    {prompt: ""} ,{:class => "form-control"}%>
+        </div>
+        
+        <%#カテゴライズ大分類で検索%>
+        <div class ="form-group">      
+            <%= f.label :large_categorises_large_categorise_id_eq, "カテゴライズ分類",class:"control-label" %>
+            <% large_category_options = LargeCategorise
+                                        .group(:large_categorise_name)
+                                        .order(:large_categorise_id)
+                                        .map{|c| [c.large_categorise_name, c.large_categorise_id, data: { children_path: large_categorise_categorises_path(c.large_categorise_id) }]}%>
+            <%= f.select :large_categorises_large_categorise_id_eq,
+                                    large_category_options,
+                                    {prompt: ""} ,class:"form-control select-parent" %>
+        </div>
+        
+        
+        <%#ドロップダウンリストでカテゴライズで検索%>
+        <%# カテゴライズ大分類が選ばれたら選択肢が絞られる　%>
+        <div class ="form-group">      
+            <%= f.label :categorises_id_eq, "カテゴライズ",class:"control-label" %>
+            <% categorises = Categorise.try(:categorise_name) ||[]%>
+            <% categorise_options = categorises.map {|c| [c.categorise_name, c.id]} %>
+            <%= f.select :categorises_id_eq, categorise_options,{prompt: ""} ,class:"form-control select-children" %>
+        </div>
+
+
+
+                
+        <div class ="form-group">           
+            <%= f.submit class:"btn btn-sm btn-search btn-primary"%> 
+            <%= link_to "クリア 一覧表示" , diseases_path, class:"btn btn-sm btn-search btn-success"  %>
+        </div>
+    <% end %>
+
+
+</div>

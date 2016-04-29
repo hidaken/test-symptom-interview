@@ -1,0 +1,14 @@
+
+<% @symptoms.each do |s| %>
+    <tr>
+        <td><%= s.symptom.symptom_category.symptom_category_name %></td>
+        <td><%= s.symptom_id %></td>
+        <td><%= s.symptom.symptom_name %></td>
+        <td><%= s.plr %></td>
+        <td><%= s.description %></td>
+        <td><%= link_to "",edit_disease_symptom_path(s), remote: true, class:"btn btn-sm btn-info glyphicon glyphicon-cog" %></td>
+        <td><%= link_to "",disease_symptom_path(s), method: :delete, data: {confirm: "削除してよろしいですか?"},class:"btn btn-sm btn-danger glyphicon glyphicon-remove" %></td>
+    </tr>
+<% end %>
+
+

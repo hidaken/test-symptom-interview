@@ -1,0 +1,11 @@
+<% content_for :head do %>
+  <title>病気一覧</title>
+<% end %>
+
+<div class="sidebar col-md-2">
+    <%= render partial: 'shared/searchbox', locals:{search_path: diseases_path} %>
+</div>
+
+<div class ="main col-md-10">
+    <%= render 'diseases/searchresult' %>
+</div>

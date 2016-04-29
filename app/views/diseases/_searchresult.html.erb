@@ -1,0 +1,50 @@
+<div class ="panel panel-default">
+    <div class="panel-heading">
+      <h4>病気一覧</h4>
+    </div>
+    <div class="panel-body">
+      <table class="table table-hover table-condensed">
+        <thead>
+        <tr>
+          <th><%= sort_link(@q, :id,'ID')%></th>
+          <th><%= sort_link(@q, :name,'病名')%></th>
+          <th>基礎点数</th>
+          <th><%= sort_link(@q, :onset,'発症様式')%></th>
+          <th><%= sort_link(@q, :localization,'局在')%></th>
+          <th><%= sort_link(@q, :importance,'重要')%></th>
+          <th><%= sort_link(@q, :morbidity_baby,'乳児')%></th>
+          <th><%= sort_link(@q, :morbidity_child,'児童')%></th>
+          <th><%= sort_link(@q, :morbidity_adult,'成人')%></th>
+          <th><%= sort_link(@q, :morbidity_senior,'老人')%></th>
+          <th><%= sort_link(@q, :morbidity_male,'男性')%></th>
+          <th><%= sort_link(@q, :morbidity_female,'女性')%></th>
+          <th>ICD10</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% @diseases.each do |disease| %>
+            <tr>
+                <td><%= disease.id %></td>
+                <td><%= disease.name %></td>
+                <td>
+                <% disease.frequency_points.each do |frequency_point| %>
+                    <%= frequency_point.point %>
+                <% end %>
+                </td>
+                <td><%= disease.onset %></td>
+                <td><%= disease.localization %></td>
+                <td><%= disease.importance  %></td>
+                <td><%= disease.morbidity_baby %></td>
+                <td><%= disease.morbidity_child %></td>
+                <td><%= disease.morbidity_adult %></td>
+                <td><%= disease.morbidity_senior %></td>
+                <td><%= disease.morbidity_male %></td>
+                <td><%= disease.morbidity_female %></td>
+                <td><%= disease.icd10_1 + "/" + disease.icd10_2 %></td>
+                <td><%= link_to "", disease_path(disease) ,class:"btn btn-sm btn-primary glyphicon glyphicon-pencil",:target=>["_blank"] %></td>
+            </tr>
+        <% end %>
+        </tbody>
+      </table>
+    </div>
+</div>

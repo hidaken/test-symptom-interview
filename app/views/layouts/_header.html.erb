@@ -1,0 +1,29 @@
+<header>
+  <nav class="navbar navbar-default navbar-fixed-top">
+    <div class="container-fluid">
+      <div class="navbar-inner">
+        <div class="navbar-header">
+
+          <h1 class="logo">
+            <%= link_to "問診システム", root_path, class: "navbar-brand" %>
+          </h1>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav navbar-right">
+            <% unless logged_in? %>
+              <li><%= link_to "新規登録", signup_path %></li>
+              <li><%= link_to "ログイン", login_path %></li>
+            <% else %>
+              <li><%= link_to Date.today,"#" %></li>
+              <li><%= link_to "病気一覧" , diseases_path  %></li>
+              <li><%= link_to "症状検索" , disease_symptoms_path  %></li>
+              <li><%= link_to "問診一覧", "#"%></li>
+              <li><%= link_to "ログアウト", logout_path, method: "delete" %></li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </nav>
+</header>

@@ -1,0 +1,76 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or any plugin's vendor/assets/stylesheets directory can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require_tree .
+ *= require_self
+ 
+ */
+
+@import "variables";
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+
+.sidebar {
+  padding-right: 0;
+}
+
+.form-group {
+  padding: 10px 10px 0px 10px;
+}
+
+.menu-btn {
+  margin: 20px 0px;
+  padding: 20px 0px;
+  border-radius: 10px;
+}
+
+.panel-heading {
+  padding: 5px 10px;
+}
+
+.alert {
+  width: 50%;
+  margin: 5px auto;
+  
+}
+
+.btn-search {
+  margin: 5px auto;
+}
+
+.symtom_name {
+  width: 10px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.morbidity{
+  width: 60px !important;
+  padding: 0px 5px;
+  
+}
+
+.disease-detail-text {
+  padding: 0 0;
+}
+
+.block {
+  margin: 10px 0px 10px 0px;
+  padding: 0px 0px 20px 0px;
+  background: #fff;
+  border: 1px #ccc solid;
+  box-shadow: 0 2px 3px 0 #ddd;
+  -moz-box-shadow: 0 2px 3px 0 #ddd;
+  -webkit-box-shadow: 0 2px 3px 0 #ddd;
+}

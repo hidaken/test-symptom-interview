@@ -1,0 +1,24 @@
+<!-- page title 及びdescription -->
+<% content_for :head do %>
+  <title><%= @disease.name %></title>
+<% end %>
+
+
+<div class="main">
+    <div class="col-md-12">
+        <%= render "diseases/edit" %>
+    </div>
+    
+   
+    <div class="col-md-12">
+        <%= render "diseases/symptom_index" %>
+    </div>
+    <div class="col-md-4">
+        <%= render "diseases/disease_classify_index" %>
+    </div>
+    <div class="col-md-8">
+        <%= render "diseases/categorise_disease_index" %>
+    </div>
+
+    
+</div>

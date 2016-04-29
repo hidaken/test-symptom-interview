@@ -1,0 +1,62 @@
+<div class ="panel panel-default">
+  <div class="panel-heading">
+    <h4><%= @disease.name %>のカテゴライズ</h4>
+  </div>
+  <div class="panel-body">
+    <table class="table table-hover">
+      <thead>
+      <tr>
+        <th>病名</th>
+        <th>カテゴライズ大分類</th>
+        <th>カテゴライズ名</th>
+        <th>変更</th>
+        <th>削除</th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @categorises.each do |c| %>
+          <tr>
+              <td><%= @disease.name %></td>
+              <td>
+                <% c.large_categorises.each do |large_categorise| %>
+                  <%= large_categorise.large_categorise_name %>
+                <% end %>
+              </td>
+              <td><%= c.categorise.categorise_name %></td>
+              <td><%= link_to "",edit_categorise_disease_relation_path(c), class:"btn btn-sm btn-info glyphicon glyphicon-cog" %></td>
+              <td><%= link_to "",categorise_disease_relation_path(c), method: :delete, data: {confirm: "削除してよろしいですか?"},class:"btn btn-sm btn-danger glyphicon glyphicon-remove" %></td>
+          
+          </tr>
+      <% end %>
+      </tbody>
+    </table>
+    
+          
+<!-- 新規入力フォーム -->
+    <%= form_for(@categorise_disease_relation, html:{class:"form-inline"}) do |f| %>
+      <%= f.hidden_field :disease_id, :value => params[:id] %>
+
+<!--カテゴライズ大分類で検索-->
+    <div class ="form-group">      
+        <%= label :large_categorises_large_categorise_id, "カテゴライズ分類",class:"control-label" %>
+        <% large_category_options = LargeCategorise
+                                    .group(:large_categorise_name)
+                                    .order(:large_categorise_id)
+                                    .map{|c| [c.large_categorise_name, c.large_categorise_id, data: { children_path: large_categorise_categorises_path(c.large_categorise_id) }]}%>
+
+        <%= collection_select :large_catgorises,:large_categorise_id, large_category_options, :first, :last, {:include_blank => true}, {:class => "form-control select-parent"} %>
+    </div>
+<!--カテゴライズ大分類が選ばれたら選択肢が絞られる-->
+    <div class ="form-group">      
+        <%= f.label :categorise_id, "カテゴライズ",class:"control-label" %>
+        <% categorises = Categorise.all ||[]%>
+        <% categorise_options = categorises.map {|c| [c.categorise_name, c.id]} %>
+        <%= f.select :categorise_id, categorise_options,{:include_blank => true} ,class:"form-control select-children" %>
+    </div>
+
+    <div class="form-group">
+        <%= f.submit class:"btn btn-sm btn-primary pull-right"%>
+    </div>
+    <% end %>
+  </div>
+</div>

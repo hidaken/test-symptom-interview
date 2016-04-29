@@ -1,0 +1,3 @@
+$(".symptom-index").html("<%= escape_javascript(render "diseases/symptom_index_body") %>")
+$(".error-message").html("<%= escape_javascript(render partial: "shared/error_messages") %>")
+$("#symptom-modal").modal("hide")

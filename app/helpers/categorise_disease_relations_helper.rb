@@ -1,0 +1,2 @@
+module CategoriseDiseaseRelationsHelper
+end
