@@ -55,6 +55,8 @@ gem 'pry-byebug', group: :development
 
 gem 'ransack' #検索用gem ransack
 
+gem 'active_attr' #テーブル無しクラスの定義
+
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
@@ -74,10 +76,6 @@ group :development do
 
   #N+1検出のためのbullet導入
   gem 'bullet', :group => :development
-  
-  #テーブル無しクラスの定義
-  gem 'active_attr'
-  
   
 end
 

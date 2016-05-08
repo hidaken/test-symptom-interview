@@ -21613,3 +21613,25 @@ Processing by HospitalsController#show as HTML
   Rendered shared/_error_messages.html.erb (0.1ms)
   Rendered layouts/_footer.html.erb (0.1ms)
 Completed 200 OK in 242ms (Views: 238.3ms | ActiveRecord: 1.1ms)
+
+
+Started GET "/" for 119.175.34.26 at 2016-05-08 05:01:31 +0000
+Cannot render console from 119.175.34.26! Allowed networks: 118.243.82.82, 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by WelcomeController#index as HTML
+  [1m[35mHospital Load (0.3ms)[0m  SELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`id` = 1 LIMIT 1
+Redirected to https://test-symptom-interview-khidaka.c9users.io/hospitals/1
+Completed 302 Found in 80ms (ActiveRecord: 2.3ms)
+
+
+Started GET "/hospitals/1" for 119.175.34.26 at 2016-05-08 05:01:32 +0000
+Cannot render console from 119.175.34.26! Allowed networks: 118.243.82.82, 127.0.0.0/127.255.255.255, ::1
+Processing by HospitalsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mHospital Load (0.3ms)[0m  [1mSELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`id` = 1 LIMIT 1[0m
+  Rendered hospitals/show.html.erb within layouts/application (6.7ms)
+  [1m[35mHospital Load (0.2ms)[0m  SELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`id` = 1 LIMIT 1
+  Rendered layouts/_header.html.erb (4.0ms)
+  Rendered shared/_error_messages.html.erb (0.5ms)
+  Rendered layouts/_footer.html.erb (1.8ms)
+Completed 200 OK in 699ms (Views: 693.2ms | ActiveRecord: 0.5ms)
