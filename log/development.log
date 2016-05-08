@@ -21571,3 +21571,45 @@ Processing by DiseaseSymptomsController#index as HTML
   Rendered shared/_error_messages.html.erb (0.1ms)
   Rendered layouts/_footer.html.erb (0.1ms)
 Completed 200 OK in 3359ms (Views: 1847.4ms | ActiveRecord: 59.3ms)
+
+
+Started GET "/" for 119.175.34.26 at 2016-05-08 01:06:29 +0000
+Cannot render console from 119.175.34.26! Allowed networks: 118.243.82.82, 127.0.0.0/127.255.255.255, ::1
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT `schema_migrations`.* FROM `schema_migrations`[0m
+Processing by WelcomeController#index as HTML
+  [1m[35mHospital Load (0.4ms)[0m  SELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`id` IS NULL LIMIT 1
+Redirected to https://test-symptom-interview-khidaka.c9users.io/login
+Completed 302 Found in 53ms (ActiveRecord: 1.7ms)
+
+
+Started GET "/login" for 119.175.34.26 at 2016-05-08 01:06:30 +0000
+Cannot render console from 119.175.34.26! Allowed networks: 118.243.82.82, 127.0.0.0/127.255.255.255, ::1
+Processing by SessionsController#new as HTML
+  Rendered sessions/new.html.erb within layouts/application (23.6ms)
+  [1m[36mHospital Load (0.2ms)[0m  [1mSELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`id` IS NULL LIMIT 1[0m
+  Rendered layouts/_header.html.erb (2.7ms)
+  Rendered shared/_error_messages.html.erb (0.5ms)
+  Rendered layouts/_footer.html.erb (0.6ms)
+Completed 200 OK in 848ms (Views: 847.5ms | ActiveRecord: 0.2ms)
+
+
+Started POST "/login" for 119.175.34.26 at 2016-05-08 01:06:41 +0000
+Cannot render console from 119.175.34.26! Allowed networks: 118.243.82.82, 127.0.0.0/127.255.255.255, ::1
+Processing by SessionsController#create as HTML
+  Parameters: {"utf8"=>"✓", "authenticity_token"=>"ZYGMtRPaoIqHdmjyMz0uKieg+enJjZ13Du1+yfwcBFiHLEdrhADnDFxg7IdGpLaLrwhMaotEEvAxfq/U4sN1mw==", "session"=>{"login_id"=>"1111", "password"=>"[FILTERED]"}, "commit"=>"ログイン"}
+  [1m[35mHospital Load (0.8ms)[0m  SELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`login_id` = 1111 LIMIT 1
+Redirected to https://test-symptom-interview-khidaka.c9users.io/hospitals/1
+Completed 302 Found in 112ms (ActiveRecord: 1.5ms)
+
+
+Started GET "/hospitals/1" for 119.175.34.26 at 2016-05-08 01:06:41 +0000
+Cannot render console from 119.175.34.26! Allowed networks: 118.243.82.82, 127.0.0.0/127.255.255.255, ::1
+Processing by HospitalsController#show as HTML
+  Parameters: {"id"=>"1"}
+  [1m[36mHospital Load (0.8ms)[0m  [1mSELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`id` = 1 LIMIT 1[0m
+  Rendered hospitals/show.html.erb within layouts/application (1.0ms)
+  [1m[35mHospital Load (0.3ms)[0m  SELECT  `hospitals`.* FROM `hospitals` WHERE `hospitals`.`id` = 1 LIMIT 1
+  Rendered layouts/_header.html.erb (3.7ms)
+  Rendered shared/_error_messages.html.erb (0.1ms)
+  Rendered layouts/_footer.html.erb (0.1ms)
+Completed 200 OK in 242ms (Views: 238.3ms | ActiveRecord: 1.1ms)
